@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Portfolio | Yash Shendurkar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0c0e;
+            --card-bg: #16181b;
+            --accent: #d4af37;
+            --text: #ffffff;
+            --text-dim: #999;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 8%; position: fixed; width: 100%; top: 0;
+            background: rgba(11, 12, 14, 0.9); backdrop-filter: blur(20px); z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); text-decoration: none; font-weight: bold; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 2.5rem; }
+        nav ul li a { text-decoration: none; color: var(--text); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        nav ul li a:hover { color: var(--accent); }
+
+        /* Section Layouts */
+        section { padding: 100px 10%; }
+        .heading { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 3rem; text-align: center; }
+        .heading span { color: var(--accent); font-style: italic; }
+
+        /* Hero Section */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 10vw, 6rem); margin-bottom: 1rem; }
+        .typing-text { color: var(--accent); }
+
+        /* Services Section */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .service-card { background: var(--glass); padding: 3rem 2rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .service-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem; }
+        .service-card:hover { background: var(--card-bg); transform: translateY(-10px); border-color: var(--accent); }
+
+        /* Testimonials Section */
+        .testimonial-container { display: flex; overflow-x: auto; gap: 2rem; padding: 2rem 0; scrollbar-width: none; }
+        .testimonial-card { min-width: 350px; background: var(--card-bg); padding: 2rem; border-radius: 10px; border-left: 4px solid var(--accent); }
+        .testimonial-card p { font-style: italic; color: var(--text-dim); }
+        .client-name { margin-top: 1rem; font-weight: 600; display: block; color: var(--accent); }
+
+        /* Contact Section */
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 1rem; margin-bottom: 1.5rem;
+            background: var(--glass); border: 1px solid #333; color: white; border-radius: 5px; outline: none;
+        }
+        .contact-form input:focus { border-color: var(--accent); }
+        .submit-btn { background: var(--accent); color: var(--bg-color); padding: 1rem 3rem; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; }
+        .submit-btn:hover { letter-spacing: 2px; }
+
+        /* Social Icons */
+        .social-links { display: flex; gap: 1.5rem; margin-top: 1.5rem; }
+        .social-links a { font-size: 1.5rem; color: var(--text); transition: 0.3s; }
+        .social-links a:hover { color: var(--accent); transform: scale(1.2); }
+
+        /* Footer */
+        footer { padding: 4rem 10%; text-align: center; border-top: 1px solid #222; color: var(--text-dim); font-size: 0.8rem; }
+
+        /* ===== CERTIFICATIONS SECTION ===== */
+        #certifications {
+            background: linear-gradient(180deg, #0b0c0e 0%, #111318 50%, #0b0c0e 100%);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .cert-card {
+            background: #12141a;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .cert-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Gold top accent bar */
+        .cert-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .cert-card:hover::before { opacity: 1; }
+
+        /* Certificate image preview area */
+        .cert-preview {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #1a1c22;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .cert-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .cert-card:hover .cert-preview img {
+            transform: scale(1.05);
+        }
+
+        /* Overlay with view icon on hover */
+        .cert-preview-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cert-card:hover .cert-preview-overlay { opacity: 1; }
+
+        .cert-preview-overlay i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            filter: drop-shadow(0 0 10px rgba(212,175,55,0.6));
+        }
+
+        /* Placeholder for missing images */
+        .cert-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #444;
+        }
+        .cert-placeholder i { font-size: 3rem; color: #2a2d35; }
+        .cert-placeholder span { font-size: 0.75rem; letter-spacing: 1px; }
+
+        /* Certificate info area */
+        .cert-body {
+            padding: 1.5rem;
+        }
+
+        .cert-issuer-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 3px 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .cert-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .cert-meta {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-bottom: 1.2rem;
+        }
+
+        /* Action buttons row */
+        .cert-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .cert-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .cert-btn-view {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--accent);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .cert-btn-view:hover {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: var(--accent);
+        }
+
+        .cert-btn-download {
+            background: var(--accent);
+            color: #0b0c0e;
+        }
+        .cert-btn-download:hover {
+            background: #e8c84a;
+            transform: scale(1.03);
+        }
+
+        /* Modal for full-screen cert view */
+        .cert-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .cert-modal.active { display: flex; }
+
+        .cert-modal-inner {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            background: #12141a;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .cert-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #222;
+        }
+
+        .cert-modal-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .cert-modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .cert-modal-close:hover { color: #fff; }
+
+        .cert-modal-img-wrap {
+            width: 100%;
+            max-height: 70vh;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0e1014;
+            padding: 1rem;
+        }
+        .cert-modal-img-wrap img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .cert-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #222;
+        }
+
+        /* Stats bar */
+        .cert-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3.5rem;
+            flex-wrap: wrap;
+        }
+        .cert-stat-item { text-align: center; }
+        .cert-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            display: block;
+        }
+        .cert-stat-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); }
+
+        /* Presentations section */
+        .presentations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Resume hero section */
+        .resume-hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 40px 20px;
+            background: #0f172a;
+        }
+
+        .bg-shape {
+            position: absolute;
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.5;
+            animation: move 10s infinite alternate ease-in-out;
+        }
+        .shape-1 { width: 400px; height: 400px; background: #6366f1; top: -100px; left: -100px; }
+        .shape-2 { width: 500px; height: 500px; background: #a855f7; bottom: -150px; right: -100px; animation-delay: 2s; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 100px) scale(1.1); }
+        }
+
+        .glass-card {
+            position: relative; z-index: 1; max-width: 1100px; width: 100%;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 24px;
+            padding: 50px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .resume-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
+        .resume-visual { position: relative; border-radius: 12px; overflow: hidden; transform: rotate(-2deg); transition: transform 0.5s; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); }
+        .resume-visual:hover { transform: rotate(0deg) scale(1.02); }
+        .resume-visual img { width: 100%; display: block; }
+        .badge { display: inline-block; background: rgba(99,102,241,0.2); color: #818cf8; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
+        .resume-info h1 { font-size: 3rem; color: white; margin: 20px 0; line-height: 1.1; font-weight: 800; }
+        .cta-group { display: flex; gap: 20px; }
+        .btn-glow { background: #6366f1; color: white; padding: 15px 35px; border-radius: 12px; text-decoration: none; font-weight: 700; box-shadow: 0 0 20px rgba(99,102,241,0.4); transition: 0.3s; display: inline-block; }
+        .btn-glow:hover { background: #4f46e5; box-shadow: 0 0 30px rgba(99,102,241,0.6); transform: translateY(-2px); }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.15); color: white; padding: 15px 35px; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-block; }
+        .btn-outline:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+        @media (max-width: 768px) {
+            .contact-wrapper { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+            .cert-grid { grid-template-columns: 1fr; }
+            .resume-grid { grid-template-columns: 1fr; text-align: center; }
+            .cta-group { justify-content: center; flex-direction: column; }
+            .glass-card { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo"><h1>PORTFOLIO.</h1></a>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#presentations">Presentations</a></li>
+            <li><a href="#testimonials">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#resume">Resume</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>YASH <span style="color:var(--accent);">SHENDURKAR.</span></h1>
+        <h3 class="heading" style="font-size:1.5rem;margin-bottom:1rem;"><span><h2>Future Software Engineer</h2></span></h3>
+        <p style="max-width:750px;color:var(--text-dim);line-height:1.8;">Software developer with experience in writing code using different programming languages such as Python, HTML, and C++. Developed solutions to common programming problems, improving problem-solving skills. Regularly learns new programming concepts and explores modern AI tools such as ChatGPT, Gemini, and Perplexity to stay updated with the latest trends.</p>
+        <img src="C:\Users\ASUS\HTML\photo.jpeg" width="100" >
+    </section>
+
+    <!-- PERSONAL HIGHLIGHTS -->
+    <section id="services">
+        <h1 class="heading"><span>Personal Highlights</span></h1>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-code"></i>
+                <h2 style="color:rgb(71,243,255);margin-bottom:1rem;">About Me</h2>
+                <p style="color:#ccc;">I am <strong style="color:rgb(203,255,71);">Yash Shendurkar</strong> — passionate about technology and problem-solving. I enjoy working on projects that help me improve my skills and gain practical experience.</p>
+                <p style="color:rgb(255,157,71);margin-top:0.75rem;">My goal is to build a successful career in the IT industry and contribute to innovative projects.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h2 style="color:rgb(71,255,111);margin-bottom:1rem;">Education</h2>
+                <ul style="list-style:none;">
+                    <li style="margin-bottom:0.75rem;"><strong style="color:rgb(255,71,71);">BTech Software Engineering</strong><br>MIT Academy of Engineering, Alandi, Pune<br><span style="color:var(--accent);">1st Semester CGPA — 8.14</span></li>
+                    <li style="margin-bottom:0.75rem;"><strong style="color:rgb(255,71,108);">HSC</strong><br>Shri Dawale Junior College (Akola) — <span style="color:var(--accent);">70.20%</span></li>
+                    <li><strong style="color:rgb(255,71,99);">SSC</strong><br>Govind New English Public School (Karanja Lad) — <span style="color:var(--accent);">90.40%</span></li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-star"></i>
+                <h2 style="color:rgb(71,151,255);margin-bottom:1rem;">Strengths & Hobbies</h2>
+                <ul style="color:#ccc;padding-left:1.2rem;">
+                    <li>Badminton Player</li>
+                    <li>Cricket Enthusiast</li>
+                    <li>Nature Explorer</li>
+                    <li>Love connecting with nature</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-laptop-code"></i>
+                <h2 style="color:rgb(240,255,71);margin-bottom:1rem;">Technical Skills</h2>
+                <ul style="color:#ccc;padding-left:1.2rem;">
+                    <li>Programming — Python, C</li>
+                    <li>Web — HTML, CSS</li>
+                    <li>Tools — Orange, Linux, Git</li>
+                    <li>Soft Skills — Communication, Teamwork</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-project-diagram"></i>
+                <h2 style="color:rgb(255,71,206);margin-bottom:1rem;">Projects</h2>
+                <ul style="color:#ccc;padding-left:1.2rem;">
+                    <li style="margin-bottom:0.5rem;">IoT Based Smart Healthcare Reminder System</li>
+                    <li>Personal Portfolio Website</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CERTIFICATIONS SECTION ===== -->
+    <section id="certifications">
+        <h1 class="heading">My <span>Certifications</span></h1>
+
+        <!-- Stats bar -->
+        <div class="cert-stats">
+            <div class="cert-stat-item">
+                <span class="cert-stat-number">4</span>
+                <span class="cert-stat-label">Certificates Earned</span>
+            </div>
+            <div class="cert-stat-item">
+                <span class="cert-stat-number">3</span>
+                <span class="cert-stat-label">Platforms</span>
+            </div>
+            <div class="cert-stat-item">
+                <span class="cert-stat-number">2026</span>
+                <span class="cert-stat-label">Year</span>
+            </div>
+        </div>
+
+        <div class="cert-grid">
+
+            <!-- Certificate 1: Prompt Engineering -->
+            <div class="cert-card">
+                <div class="cert-preview" onclick="openCertModal('Prompt Engineering', 'C:\\Users\\ASUS\\Downloads\\prompt e.jpeg')">
+                    <img src="C:\Users\ASUS\HTML\prompt.jpeg" alt="Prompt Engineering Certificate" onerror="this.parentElement.innerHTML='<div class=\'cert-placeholder\'><i class=\'fas fa-certificate\'></i><span>CERTIFICATE</span></div><div class=\'cert-preview-overlay\'><i class=\'fas fa-search-plus\'></i></div>'">
+                    <div class="cert-preview-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="cert-body">
+                    <span class="cert-issuer-badge">AI &amp; ML</span>
+                    <div class="cert-title">Prompt Engineering</div>
+                    <div class="cert-meta">Fundamentals of effective AI prompting &amp; model interaction</div>
+                    <div class="cert-actions">
+                        <a class="cert-btn cert-btn-view" onclick="openCertModal('Prompt Engineering', 'C:\\Users\\ASUS\\Downloads\\prompt e.jpeg')">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <a class="cert-btn cert-btn-download" href="C:\Users\ASUS\Downloads\prompt e.jpeg" download="Prompt_Engineering_Certificate.jpeg">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificate 2: Linux / Kali Linux -->
+            <div class="cert-card">
+                <div class="cert-preview" onclick="openCertModal('Linux Certificate (Kali Linux)', 'C:\\Users\\ASUS\\Downloads\\WhatsApp Image 2026-02-13 at 14.26.31.jpeg')">
+                    <img src="C:\Users\ASUS\HTML\linuxcertificate.jpeg" alt="Kali Linux Certificate" onerror="this.parentElement.innerHTML='<div class=\'cert-placeholder\'><i class=\'fas fa-certificate\'></i><span>CERTIFICATE</span></div><div class=\'cert-preview-overlay\'><i class=\'fas fa-search-plus\'></i></div>'">
+                    <div class="cert-preview-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="cert-body">
+                    <span class="cert-issuer-badge">Cybersecurity</span>
+                    <div class="cert-title">Linux Certificate — Kali Linux</div>
+                    <div class="cert-meta">Practical operating system skills &amp; security fundamentals</div>
+                    <div class="cert-actions">
+                        <a class="cert-btn cert-btn-view" onclick="openCertModal('Linux Certificate (Kali Linux)', 'C:\\Users\\ASUS\\Downloads\\WhatsApp Image 2026-02-13 at 14.26.31.jpeg')">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <a class="cert-btn cert-btn-download" href="C:\Users\ASUS\Downloads\WhatsApp Image 2026-02-13 at 14.26.31.jpeg" download="Linux_Kali_Certificate.jpeg">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificate 3: Python Essentials 1 -->
+            <div class="cert-card">
+                <div class="cert-preview" onclick="openCertModal('Python Essentials 1', 'C:\\Users\\ASUS\\Downloads\\WhatsApp Image 2026-04-12 at 13.36.38.jpeg')">
+                    <img src="C:\Users\ASUS\HTML\python1.jpeg" alt="Python Essentials 1 Certificate" onerror="this.parentElement.innerHTML='<div class=\'cert-placeholder\'><i class=\'fas fa-certificate\'></i><span>CERTIFICATE</span></div><div class=\'cert-preview-overlay\'><i class=\'fas fa-search-plus\'></i></div>'">
+                    <div class="cert-preview-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="cert-body">
+                    <span class="cert-issuer-badge">Programming</span>
+                    <div class="cert-title">Python Essentials 1</div>
+                    <div class="cert-meta">Core Python — loops, functions, data types &amp; OOP basics</div>
+                    <div class="cert-actions">
+                        <a class="cert-btn cert-btn-view" onclick="openCertModal('Python Essentials 1', 'C:\\Users\\ASUS\\Downloads\\WhatsApp Image 2026-04-12 at 13.36.38.jpeg')">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <a class="cert-btn cert-btn-download" href="C:\Users\ASUS\Downloads\WhatsApp Image 2026-04-12 at 13.36.38.jpeg" download="Python_Essentials_1_Certificate.jpeg">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificate 4: Python Essentials 2 -->
+            <div class="cert-card">
+                <div class="cert-preview" onclick="openCertModal('Python Essentials 2', 'C:\\Users\\ASUS\\Downloads\\WhatsApp Image 2026-04-12 at 13.36.39.jpeg')">
+                    <img src="C:\Users\ASUS\HTML\python2.jpeg" alt="Python Essentials 2 Certificate" onerror="this.parentElement.innerHTML='<div class=\'cert-placeholder\'><i class=\'fas fa-certificate\'></i><span>CERTIFICATE</span></div><div class=\'cert-preview-overlay\'><i class=\'fas fa-search-plus\'></i></div>'">
+                    <div class="cert-preview-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="cert-body">
+                    <span class="cert-issuer-badge">Programming</span>
+                    <div class="cert-title">Python Essentials 2</div>
+                    <div class="cert-meta">Advanced Python — file I/O, exceptions, modules &amp; packages</div>
+                    <div class="cert-actions">
+                        <a class="cert-btn cert-btn-view" onclick="openCertModal('Python Essentials 2', 'C:\\Users\\ASUS\\Downloads\\WhatsApp Image 2026-04-12 at 13.36.39.jpeg')">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <a class="cert-btn cert-btn-download" href="C:\Users\ASUS\Downloads\WhatsApp Image 2026-04-12 at 13.36.39.jpeg" download="Python_Essentials_2_Certificate.jpeg">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end cert-grid -->
+    </section>
+
+    <!-- CERTIFICATE MODAL -->
+    <div class="cert-modal" id="certModal" onclick="closeCertModalOnBackdrop(event)">
+        <div class="cert-modal-inner">
+            <div class="cert-modal-header">
+                <span class="cert-modal-title" id="certModalTitle">Certificate</span>
+                <button class="cert-modal-close" onclick="closeCertModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cert-modal-img-wrap">
+                <img id="certModalImg" src="" alt="Certificate">
+            </div>
+            <div class="cert-modal-footer">
+                <a id="certModalDownload" class="cert-btn cert-btn-download" style="text-decoration:none;" href="#" download>
+                    <i class="fas fa-download"></i> Download Certificate
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRESENTATIONS -->
+    <section id="presentations">
+        <h1 class="heading">Key <span>Presentations</span></h1>
+        <div class="presentations-grid">
+            <div class="service-card">
+                <i class="fas fa-file-powerpoint"></i>
+                <h2 style="color:var(--accent);margin-bottom:0.75rem;">IoT Healthcare Reminder System</h2>
+                <p style="color:var(--text-dim);margin-bottom:1.5rem;">Technical breakdown of the Smart Healthcare Reminder project — sensors, connectivity, and system architecture.</p>
+                <a href="https://docs.google.com/presentation/d/11Jpvs8QzpZ5qirqzoc9af88FJ9wKMl0a/edit?usp=drivesdk&ouid=103928648325398846119&rtpof=true&sd=true"
+                   target="_blank" class="cert-btn cert-btn-view" style="width:fit-content;text-decoration:none;">
+                    <i class="fas fa-external-link-alt"></i> View Presentation
+                </a>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h2 style="color:var(--accent);margin-bottom:0.75rem;">River Waste Management</h2>
+                <p style="color:var(--text-dim);margin-bottom:1.5rem;">A study on mechanical separators and rotating drum designs for environmental engineering solutions.</p>
+                <a href=https://drive.google.com/file/d/1L9mkO--R8U6-egI7GYNThPFdchO8qpgf/view?usp=drivesdk
+                   target="_blank" class="cert-btn cert-btn-view" style="width:fit-content;text-decoration:none;">
+                    <i class="fas fa-external-link-alt"></i> View Presentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="testimonials" style="background:var(--glass);">
+        <h2 class="heading"><span>EXPERIENCE</span></h2>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <p>Data Visualization Practice — Tableau. Created basic charts like bar charts, stacked charts, and bubble charts using Tableau to understand data visualization concepts. Built a comprehensive Dashboard.</p>
+                <img src="C:\Users\ASUS\OneDrive\Pictures\Screenshots\Screenshot 2026-04-04 195651.png" width="200">
+                <span class="client-name">Tableau — Data Visualization</span>
+            </div>
+            <div class="testimonial-card">
+                <p>Online Course – Python Basics. Completed an online course covering fundamentals of Python including loops, functions, and object-oriented programming concepts.</p>
+                <span class="client-name">Python — Online Course</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <h2 class="heading">Get In <span>Touch</span></h2>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h2>Let's talk about your next project.</h2>
+                <h2 style="margin-top:0.75rem;color:var(--accent);">📞 9322046868</h2>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/yash-shendurkar-3b4106379" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://wa.me/919322046868" target="_blank" style="color:#25D366;"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://github.com/settings/profile"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Project Details" required></textarea>
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="resume-hero" id="resume">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="glass-card">
+            <div class="resume-grid">
+                <div class="resume-visual">
+                    <img src="C:\Users\ASUS\Downloads\Yash Shendurkar.jpg" alt="Resume Preview">
+                </div>
+                <div class="resume-info">
+                    <span class="badge">Available for Hire</span>
+                    <h1><span>RESUME</span></h1>
+                    <div class="cta-group">
+                        <a href="C:\Users\ASUS\Downloads\Yash Shendurkar (3).pdf" target="_blank" class="btn-glow">View Resume</a>
+                        <a href="C:\Users\ASUS\Downloads\Yash Shendurkar (3).pdf" download class="btn-outline">Download CV</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="color:var(--text-dim);">© 2026 Yash Shendurkar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Typewriter
+        const textElement = document.getElementById('typewriter');
+        if (textElement) {
+            const words = ["Web Developer", "UI Designer", "Creative Strategist"];
+            let wordIndex = 0, charIndex = 0, isDeleting = false;
+            function type() {
+                const currentWord = words[wordIndex];
+                textElement.textContent = isDeleting
+                    ? currentWord.substring(0, charIndex - 1)
+                    : currentWord.substring(0, charIndex + 1);
+                isDeleting ? charIndex-- : charIndex++;
+                let typeSpeed = isDeleting ? 50 : 150;
+                if (!isDeleting && charIndex === currentWord.length) { isDeleting = true; typeSpeed = 2000; }
+                else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; }
+                setTimeout(type, typeSpeed);
+            }
+            document.addEventListener('DOMContentLoaded', type);
+        }
+
+        // Certificate Modal
+        function openCertModal(title, imgSrc) {
+            document.getElementById('certModalTitle').textContent = title;
+            document.getElementById('certModalImg').src = imgSrc;
+            document.getElementById('certModalImg').alt = title;
+            document.getElementById('certModalDownload').href = imgSrc;
+            document.getElementById('certModalDownload').download = title.replace(/\s+/g, '_') + '.jpeg';
+            document.getElementById('certModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCertModal() {
+            document.getElementById('certModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeCertModalOnBackdrop(e) {
+            if (e.target === document.getElementById('certModal')) closeCertModal();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeCertModal();
+        });
+    </script>
+</body>
+</html>
